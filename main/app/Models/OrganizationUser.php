@@ -15,16 +15,6 @@ class OrganizationUser extends Model
         "user_id", "organization_id", "role"
     ];
 
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
-
-    public function organization(): BelongsTo
-    {
-        return $this->belongsTo(Organization::class);
-    }
-
     public function scopeFromRelation(Builder $query, Organization $organization, User $user): Builder
     {
         return $query

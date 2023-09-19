@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\OrganizationResource;
-use App\Http\Resources\PublicOrganizationResource;
+use App\Http\Resources\Organization\OrganizationResource;
+use App\Http\Resources\Organization\PublicOrganizationResource;
 use App\Models\Organization;
 use App\Models\OrganizationUser;
 use App\Models\User;

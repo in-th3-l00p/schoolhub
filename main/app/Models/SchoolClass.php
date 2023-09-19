@@ -13,6 +13,10 @@ class SchoolClass extends Model
         "name", "description", "organization_id"
     ];
 
+    public function organization() {
+        return $this->belongsTo(Organization::class);
+    }
+
     public function users() {
         return $this->hasManyThrough(User::class, SchoolClassUser::class);
     }
