@@ -9,15 +9,12 @@ use App\Models\SchoolClass;
 use App\Models\SchoolClassUser;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class SchoolClassController extends Controller
 {
-    // todo authorize
-/*    public function __construct() {
-        $this->authorizeResource(SchoolClass::class);
-    }*/
-
     public function index(Organization $organization) {
+        Gate::authorize("view-all-classes", $organization);
         return PublicClassResource::collection(
             $organization->classes()->get()
         );
@@ -27,6 +24,7 @@ class SchoolClassController extends Controller
         Request $request,
         Organization $organization
     ) {
+        Gate::authorize("store-class", $organization);
         return new ClassResource(SchoolClass::create([
             ...$request->validate([
                 "name" => "required|min:1|max:255",
@@ -40,6 +38,7 @@ class SchoolClassController extends Controller
         Organization $organization,
         SchoolClass $class
     ) {
+        Gate::authorize("show-class", [$organization, $class]);
         return new ClassResource($class);
     }
 
@@ -48,6 +47,7 @@ class SchoolClassController extends Controller
         Organization $organization,
         SchoolClass $class
     ) {
+        Gate::authorize("update-class", [$organization, $class]);
         return new ClassResource($class->update($request->validate([
             "name" => "required|min:1|max:255",
             "description" => "nullable"
@@ -58,6 +58,7 @@ class SchoolClassController extends Controller
         Organization $organization,
         SchoolClass $class
     ) {
+        Gate::authorize("delete-class", [$organization, $class]);
         $class.delete();
     }
 
@@ -66,6 +67,7 @@ class SchoolClassController extends Controller
         SchoolClass $class,
         User $user
     ) {
+        Gate::authorize("class-user", [$organization, $class, $user]);
         SchoolClassUser::create([
             "school_class_id" => $class->id,
             "user_id" => $user->id,
@@ -78,6 +80,7 @@ class SchoolClassController extends Controller
         SchoolClass $class,
         User $user
     ) {
+        Gate::authorize("class-user", [$organization, $class, $user]);
         SchoolClassUser::create([
             "school_class_id" => $class->id,
             "user_id" => $user->id,
@@ -90,6 +93,7 @@ class SchoolClassController extends Controller
         SchoolClass $class,
         User $user
     ) {
+        Gate::authorize("class-user", [$organization, $class, $user]);
         SchoolClassUser::query()
             ->where("school_class_id", "=", $class->id)
             ->where("user_id", "=", $user->id)

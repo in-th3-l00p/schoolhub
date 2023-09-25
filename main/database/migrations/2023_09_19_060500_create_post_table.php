@@ -14,6 +14,12 @@ return new class extends Migration
         Schema::create('post', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+
+            $table->string("title");
+            $table->text("content");
+            $table->dateTime("deadline")->nullable();
+            $table->foreignIdFor(\App\Models\SchoolClass::class);
+            $table->foreignIdFor(\App\Models\User::class);
         });
     }
 

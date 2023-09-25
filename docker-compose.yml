@@ -1,4 +1,14 @@
 services:
+  #    frontend:
+  #      build: ./webapp
+  #      volumes:
+  #        - './webapp:/usr/src/app'
+  #         - '/usr/src/app/node_modules'
+  #      ports:
+  #        - 4200:4200
+  #       command: npm start
+  #      depends_on:
+  #        - laravel.test
     laravel.test:
         build:
             context: ./main/vendor/laravel/sail/runtimes/8.2
